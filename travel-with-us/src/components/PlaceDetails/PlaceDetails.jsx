@@ -61,13 +61,41 @@ const PlaceDetails = ({ place }) => {
         {place?.address && (
           <Typography
             gutterBottom
-            veriant="body2"
+            veriant="subtitle2"
             className={classes.subtitle}
             color="textSecondary"
+            justifyContent="space-between"
           >
             <LocationOnIcon /> {place.address}
           </Typography>
         )}
+        {place?.phone && (
+          <Typography
+            gutterBottom
+            veriant="subtitle2"
+            className={classes.spacing}
+            color="textSecondary"
+            justifyContent="space-between"
+          >
+            <PhoneIcon /> {place.phone}
+          </Typography>
+        )}
+        <CardActions>
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => window.open(place.web_url)}
+          >
+            Trip Advisor
+          </Button>
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => window.open(place.website)}
+          >
+            website
+          </Button>
+        </CardActions>
       </CardContent>
     </Card>
   );
