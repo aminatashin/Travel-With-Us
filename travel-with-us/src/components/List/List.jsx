@@ -12,21 +12,11 @@ import useStyles from "./styles.js";
 import PlaceDetails from "../PlaceDetails/PlaceDetails.jsx";
 
 // =============================================
-const List = () => {
+const List = ({ places }) => {
   const classes = useStyles();
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
-  const places = [
-    { name: "cool place" },
-    { name: "cool place" },
-    { name: "Best Beer" },
-    { name: "Best Steak" },
-    { name: "cool place" },
-    { name: "cool place" },
-    { name: "cool place" },
-    { name: "amazing view" },
-    { name: "good proce" },
-  ];
+
   return (
     <div className={classes.container}>
       <Typography variant="h4">
