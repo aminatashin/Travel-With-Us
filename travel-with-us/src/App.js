@@ -46,7 +46,7 @@ function App() {
       //   tr_longitude: ne.lng,
       // };
       const res = await fetch(
-        "https://travel-advisor.p.rapidapi.com/attractions/list-in-boundary?tr_longitude=109.262909&tr_latitude=12.346705&bl_longitude=109.095887&bl_latitude=12.113245",
+        "https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary?bl_latitude=11.847676&tr_latitude=12.838442&bl_longitude=109.095887&tr_longitude=109.149359",
 
         {
           headers: {
