@@ -8,8 +8,10 @@ import Map from "./components/Map/Map";
 function App() {
   // ======================================
   const [palces, setPlaces] = useState([]);
+
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
+  const [childClick, setChildClick] = useState(null);
   const [query, setQuery] = useState({
     bl_latitude: "",
     tr_latitude: "",
@@ -78,6 +80,8 @@ function App() {
             setCoordinates={setCoordinates}
             setBounds={setBounds}
             coordinates={coordinates}
+            places={palces}
+            setChildClick={setChildClick}
           />
         </Grid>
       </Grid>
