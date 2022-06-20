@@ -12,12 +12,13 @@ function App() {
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
   const [childClick, setChildClick] = useState(null);
-  const [query, setQuery] = useState({
-    bl_latitude: "",
-    tr_latitude: "",
-    bl_longitude: "",
-    tr_longitude: "",
-  });
+  // const [query, setQuery] = useState({
+  //   bl_latitude: "",
+  //   tr_latitude: "",
+  //   bl_longitude: "",
+  //   tr_longitude: "",
+  // });
+  const [isLoading, setIsLoading] = useState(false);
 
   // ======================================
   useEffect(() => {
@@ -36,7 +37,9 @@ function App() {
   // }, [coordinates, bounds]);
   // ======================================
   useEffect(() => {
+    setIsLoading(true);
     fetchApi();
+    setIsLoading(false);
   }, [coordinates, bounds]);
   // ======================================
   const fetchApi = async (sw, ne) => {
@@ -73,7 +76,7 @@ function App() {
       <Header />
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
-          <List places={palces} />
+          <List places={palces} childClick={childClick} isLoading={isLoading} />
         </Grid>
         <Grid item xs={12} md={8}>
           <Map
