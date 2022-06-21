@@ -18,7 +18,7 @@ const List = ({ places, childClicked, isLoading }) => {
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
   const [elRefs, setElRefs] = useState([]);
-  console.log({ childClicked });
+  console.log(childClicked);
   // ==============================================
   useEffect(() => {
     const refs = Array(places?.length)

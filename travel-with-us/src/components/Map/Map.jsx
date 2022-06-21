@@ -31,7 +31,10 @@ const Map = ({
           });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
-        onChildClick={(child) => setChildClick(child)}
+        onChildClick={
+          (child) => setChildClick(child)
+          //console.log("CHILD CLICKED", child)
+        }
       >
         {places?.map((place, i) => (
           <div
