@@ -11,6 +11,7 @@ function App() {
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
   const [type, setType] = useState("restaurants");
+  const [placesFilter, setPlaceFilter] = useState([]);
   const [rating, setRating] = useState("");
   const [childClick, setChildClick] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,11 +24,17 @@ function App() {
       }
     );
   }, []);
+  // =====================================
+  useEffect(() => {
+    const placesFilter = palces.filter((place) => place.rating > rating);
+    setPlaceFilter(placesFilter);
+  }, [rating]);
   // ======================================
   useEffect(() => {
     setIsLoading(true);
     fetchApi(type).then((data) => {
       setPlaces(data.data);
+      setPlaceFilter([]);
       setIsLoading(false);
     });
   }, [type, coordinates, bounds]);
@@ -66,7 +73,7 @@ function App() {
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
           <List
-            places={palces}
+            places={placesFilter.length ? placesFilter : palces}
             childClick={childClick}
             isLoading={isLoading}
             type={type}
@@ -80,7 +87,7 @@ function App() {
             setCoordinates={setCoordinates}
             setBounds={setBounds}
             coordinates={coordinates}
-            places={palces}
+            places={placesFilter.length ? placesFilter : palces}
             setChildClick={setChildClick}
           />
         </Grid>
