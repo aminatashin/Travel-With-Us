@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getPlacesData } from "../src/Api/api";
 import { CssBaseline, Grid } from "@material-ui/core";
 import Header from "./components/Header/Header";
 import List from "./components/List/List";
@@ -11,13 +10,9 @@ function App() {
 
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
+  const [type, setType] = useState("restaurants");
+  const [rating, setRating] = useState("");
   const [childClick, setChildClick] = useState(null);
-  // const [query, setQuery] = useState({
-  //   bl_latitude: "",
-  //   tr_latitude: "",
-  //   bl_longitude: "",
-  //   tr_longitude: "",
-  // });
   const [isLoading, setIsLoading] = useState(false);
 
   // ======================================
@@ -29,29 +24,24 @@ function App() {
     );
   }, []);
   // ======================================
-  // useEffect(() => {
-  //   getPlacesData(bounds.sw,bounds.ne).then((data) => {
-  //     console.log(data);
-  //     setPlaces(data);
-  //   });
-  // }, [coordinates, bounds]);
-  // ======================================
   useEffect(() => {
     setIsLoading(true);
-    fetchApi();
-    setIsLoading(false);
-  }, [coordinates, bounds]);
+    fetchApi(type).then((data) => {
+      setPlaces(data.data);
+      setIsLoading(false);
+    });
+  }, [type, coordinates, bounds]);
   // ======================================
-  const fetchApi = async (sw, ne) => {
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   fetchApi();
+  //   setIsLoading(false);
+  // }, [coordinates, bounds]);
+  // ======================================
+  const fetchApi = async () => {
     try {
-      // query = {
-      //   bl_latitude: sw.lat,
-      //   tr_latitude: ne.lat,
-      //   bl_longitude: sw.lng,
-      //   tr_longitude: ne.lng,
-      // };
       const res = await fetch(
-        "https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary?bl_latitude=11.847676&tr_latitude=12.838442&bl_longitude=109.095887&tr_longitude=109.149359",
+        `https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary?bl_latitude=11.847676&tr_latitude=12.838442&bl_longitude=109.095887&tr_longitude=109.149359&restaurant_tagcategory_standalone=10591&restaurant_tagcategory=10591&limit=30&currency=USD&open_now=false&lunit=km&lang=en_US`,
 
         {
           headers: {
@@ -64,7 +54,6 @@ function App() {
       if (res.ok) {
         const data = await res.json();
         console.log(data);
-        setPlaces(data.data);
       }
     } catch (error) {
       console.log(error);
@@ -76,7 +65,15 @@ function App() {
       <Header />
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
-          <List places={palces} childClick={childClick} isLoading={isLoading} />
+          <List
+            places={palces}
+            childClick={childClick}
+            isLoading={isLoading}
+            type={type}
+            setType={setType}
+            rating={rating}
+            setRating={setRating}
+          />
         </Grid>
         <Grid item xs={12} md={8}>
           <Map

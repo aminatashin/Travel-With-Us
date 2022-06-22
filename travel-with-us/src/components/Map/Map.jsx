@@ -31,43 +31,41 @@ const Map = ({
           });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
-        onChildClick={
-          (child) => setChildClick(child)
-          //console.log("CHILD CLICKED", child)
-        }
+        onChildClick={(child) => setChildClick(child)}
       >
-        {places?.map((place, i) => (
-          <div
-            className={classes.markerContainer}
-            lat={Number(place.latitude)}
-            lng={Number(place.longitude)}
-            key={i}
-          >
-            {!isDesktop ? (
-              <LocationOnOutlinedIcon color="primary" fontSize="large" />
-            ) : (
-              <Paper elevation={3} className={classes.paper}>
-                <Typography
-                  className={classes.Typography}
-                  variant="subtitle2"
-                  gutterBottom
-                >
-                  {place.name}
-                </Typography>
-                <img
-                  className={classes.pointer}
-                  src={
-                    place.photo
-                      ? place.photo.images.large.url
-                      : "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bHV4dXJ5JTIwcmVzdGF1cmFudHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60"
-                  }
-                  alt={place.name}
-                />
-                <Rating size="small" value={Number(place.rating)} readOnly />
-              </Paper>
-            )}
-          </div>
-        ))}
+        {places.length &&
+          places?.map((place, i) => (
+            <div
+              className={classes.markerContainer}
+              lat={Number(place.latitude)}
+              lng={Number(place.longitude)}
+              key={i}
+            >
+              {!isDesktop ? (
+                <LocationOnOutlinedIcon color="primary" fontSize="large" />
+              ) : (
+                <Paper elevation={3} className={classes.paper}>
+                  <Typography
+                    className={classes.Typography}
+                    variant="subtitle2"
+                    gutterBottom
+                  >
+                    {place.name}
+                  </Typography>
+                  <img
+                    className={classes.pointer}
+                    src={
+                      place.photo
+                        ? place.photo.images.large.url
+                        : "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bHV4dXJ5JTIwcmVzdGF1cmFudHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60"
+                    }
+                    alt={place.name}
+                  />
+                  <Rating size="small" value={Number(place.rating)} readOnly />
+                </Paper>
+              )}
+            </div>
+          ))}
       </GoogleMapReact>
     </div>
   );
