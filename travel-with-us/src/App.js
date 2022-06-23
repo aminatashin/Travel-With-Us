@@ -15,6 +15,7 @@ function App() {
   const [rating, setRating] = useState("");
   const [childClick, setChildClick] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [autocomplete, setAutocomplete] = useState(null);
 
   // ======================================
   useEffect(() => {
@@ -32,12 +33,14 @@ function App() {
   // ======================================
   useEffect(() => {
     setIsLoading(true);
-    fetchApi(type).then((data) => {
-      setPlaces(data.data);
+    fetchApi(type, bounds.sw, bounds.ne).then((data) => {
+      setPlaces(
+        data.data?.filter((place) => place.name && place.num_reviews > 0)
+      );
       setPlaceFilter([]);
       setIsLoading(false);
     });
-  }, [type, coordinates, bounds]);
+  }, [type, bounds]);
   // ======================================
   // useEffect(() => {
   //   setIsLoading(true);
@@ -45,10 +48,10 @@ function App() {
   //   setIsLoading(false);
   // }, [coordinates, bounds]);
   // ======================================
-  const fetchApi = async () => {
+  const fetchApi = async (type, sw, ne) => {
     try {
       const res = await fetch(
-        `https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary?bl_latitude=11.847676&tr_latitude=12.838442&bl_longitude=109.095887&tr_longitude=109.149359&restaurant_tagcategory_standalone=10591&restaurant_tagcategory=10591&limit=30&currency=USD&open_now=false&lunit=km&lang=en_US`,
+        `https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary?bl_latitude=${sw.lat}&tr_latitude=${ne.lat}&bl_longitude=${sw.lng}&tr_longitude=${ne.lng}`,
 
         {
           headers: {
@@ -66,10 +69,17 @@ function App() {
       console.log(error);
     }
   };
+  const onLoad = (autoC) => setAutocomplete(autoC);
+  const onPlaceChanged = () => {
+    const lat = autocomplete.getPlace().geometry.location.lat();
+    const lng = autocomplete.getPlace().geometry.location.lng();
+
+    setChildClick({ lat, lng });
+  };
   return (
     <>
       <CssBaseline />
-      <Header />
+      <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
           <List
