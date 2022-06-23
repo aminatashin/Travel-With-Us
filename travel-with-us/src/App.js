@@ -15,7 +15,7 @@ function App() {
   const [rating, setRating] = useState("");
   const [childClick, setChildClick] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [autocomplete, setAutocomplete] = useState(null);
+  const [weather, setWeather] = useState([]);
 
   // ======================================
   useEffect(() => {
@@ -29,25 +29,29 @@ function App() {
   useEffect(() => {
     const placesFilter = palces.filter((place) => place.rating > rating);
     setPlaceFilter(placesFilter);
-  }, [rating]);
+  }, [rating, palces]);
   // ======================================
   useEffect(() => {
-    setIsLoading(true);
-    fetchApi(type, bounds.sw, bounds.ne).then((data) => {
-      setPlaces(
-        data.data?.filter((place) => place.name && place.num_reviews > 0)
-      );
-      setPlaceFilter([]);
-      setIsLoading(false);
-    });
+    if (bounds.sw && bounds.ne) {
+      weatherFetch(coordinates.lat, coordinates.lng).then((data) => {
+        setWeather(data.coord);
+      });
+      fetchApi(type, bounds.sw, bounds.ne).then((data) => {
+        setPlaces(
+          data.data?.filter((place) => place.name && place.num_reviews > 0)
+        );
+        setPlaceFilter([]);
+      });
+    }
   }, [type, bounds]);
   // ======================================
   // useEffect(() => {
   //   setIsLoading(true);
   //   fetchApi();
   //   setIsLoading(false);
-  // }, [coordinates, bounds]);
+  // }, [type, bounds]);
   // ======================================
+
   const fetchApi = async (type, sw, ne) => {
     try {
       const res = await fetch(
@@ -55,8 +59,7 @@ function App() {
 
         {
           headers: {
-            "X-RapidAPI-Key":
-              "82e39a69f3msh5cb29321d7c6cc9p1efe1ejsn9f1e5b6e0bcd",
+            "X-RapidAPI-Key": process.env.RAPID_TRAVEL_API_KEY,
             "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
           },
         }
@@ -64,22 +67,34 @@ function App() {
       if (res.ok) {
         const data = await res.json();
         console.log(data);
+        setPlaces(data.data);
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const onLoad = (autoC) => setAutocomplete(autoC);
-  const onPlaceChanged = () => {
-    const lat = autocomplete.getPlace().geometry.location.lat();
-    const lng = autocomplete.getPlace().geometry.location.lng();
-
-    setChildClick({ lat, lng });
+  // ============================================
+  const weatherFetch = async (lat, lng) => {
+    const res = await fetch(
+      `https://community-open-weather-map.p.rapidapi.com/weather?lat=${lat}&lon=${lng}`,
+      {
+        headers: {
+          "X-RapidAPI-Key": process.env.RAPID_WEATHER_API_KEY,
+          "X-RapidAPI-Host": "community-open-weather-map.p.rapidapi.com",
+        },
+      }
+    );
+    if (res.ok) {
+      const data = await res.json();
+      console.log(data);
+      setWeather(data.coord);
+    }
   };
+
   return (
     <>
       <CssBaseline />
-      <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
+      <Header setChildClick={setChildClick} setCoordinates={setCoordinates} />
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
           <List
@@ -99,6 +114,7 @@ function App() {
             coordinates={coordinates}
             places={placesFilter.length ? placesFilter : palces}
             setChildClick={setChildClick}
+            weather={weather}
           />
         </Grid>
       </Grid>
