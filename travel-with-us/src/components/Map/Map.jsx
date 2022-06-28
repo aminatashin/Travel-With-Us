@@ -20,7 +20,7 @@ const Map = ({
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
         defaultCenter={coordinates}
         center={coordinates}
         defaultZoom={14}
@@ -72,7 +72,7 @@ const Map = ({
               )}
             </div>
           ))}
-        {weather?.list?.map((data, i) => (
+        {/* {weather?.list?.map((data, i) => (
           <div key={i} lat={data.coord.lat} lon={data.coord.lon}>
             <imag
               height={100}
@@ -80,7 +80,7 @@ const Map = ({
             />
             {data.wind}
           </div>
-        ))}
+        ))} */}
       </GoogleMapReact>
     </div>
   );

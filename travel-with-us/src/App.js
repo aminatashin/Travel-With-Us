@@ -33,9 +33,6 @@ function App() {
   // ======================================
   useEffect(() => {
     if (bounds.sw && bounds.ne) {
-      weatherFetch(coordinates.lat, coordinates.lng).then((data) => {
-        setWeather(data.coord);
-      });
       fetchApi(type, bounds.sw, bounds.ne).then((data) => {
         setPlaces(
           data.data?.filter((place) => place.name && place.num_reviews > 0)
@@ -45,6 +42,9 @@ function App() {
     }
   }, [type, bounds]);
   // ======================================
+  // weatherFetch(coordinates.lat, coordinates.lng).then((data) => {
+  //   setWeather(data.coord);
+  // });
   // useEffect(() => {
   //   setIsLoading(true);
   //   fetchApi();
@@ -59,7 +59,7 @@ function App() {
 
         {
           headers: {
-            "X-RapidAPI-Key": process.env.RAPID_TRAVEL_API_KEY,
+            "X-RapidAPI-Key": process.env.REACT_APP_RAPID_TRAVEL_API_KEY,
             "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
           },
         }
@@ -74,22 +74,22 @@ function App() {
     }
   };
   // ============================================
-  const weatherFetch = async (lat, lng) => {
-    const res = await fetch(
-      `https://community-open-weather-map.p.rapidapi.com/weather?lat=${lat}&lon=${lng}`,
-      {
-        headers: {
-          "X-RapidAPI-Key": process.env.RAPID_WEATHER_API_KEY,
-          "X-RapidAPI-Host": "community-open-weather-map.p.rapidapi.com",
-        },
-      }
-    );
-    if (res.ok) {
-      const data = await res.json();
-      console.log(data);
-      setWeather(data.coord);
-    }
-  };
+  // const weatherFetch = async (lat, lng) => {
+  //   const res = await fetch(
+  //     `https://community-open-weather-map.p.rapidapi.com/weather?lat=${lat}&lon=${lng}`,
+  //     {
+  //       headers: {
+  //         "X-RapidAPI-Key": process.env.RAPID_WEATHER_API_KEY,
+  //         "X-RapidAPI-Host": "community-open-weather-map.p.rapidapi.com",
+  //       },
+  //     }
+  //   );
+  //   if (res.ok) {
+  //     const data = await res.json();
+  //     console.log(data);
+  //     setWeather(data.coord);
+  //   }
+  // };
 
   return (
     <>
