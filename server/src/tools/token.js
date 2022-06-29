@@ -5,14 +5,15 @@ export const tokenAuth = async (req, res, next) => {
     console.log("you are not authorized!");
   } else {
     try {
-      const token = req.params.authorization.splice(" ")[1];
+      const token = req.headers.authorization.split(" ")[1];
       const payload = await verifyToken(token);
-
-      req.user = {
-        _id: payload._id,
-        ussrname: payload.username,
-      };
-      next();
+      if (payload) {
+        req.user = {
+          _id: payload._id,
+          ussrname: payload.username,
+        };
+        next();
+      }
     } catch (error) {
       console.log("wrong user! Token not valid");
       next(error);

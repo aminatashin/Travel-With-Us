@@ -31,7 +31,7 @@ userSchema.methods.toJSON = function () {
 };
 // ====================================
 userSchema.static("verify", async function (email, password) {
-  const user = await this.find(email);
+  const user = await this.findOne({ email });
   if (user) {
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
