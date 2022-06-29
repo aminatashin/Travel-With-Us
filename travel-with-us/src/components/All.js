@@ -30,16 +30,16 @@ const All = () => {
     setPlaceFilter(placesFilter);
   }, [rating, palces]);
   // ======================================
-  useEffect(() => {
-    // if (bounds.sw && bounds.ne) {
-    //   fetchApi(type, bounds.sw, bounds.ne).then((data) => {
-    //     setPlaces(
-    //       data.data?.filter((place) => place.name && place.num_reviews > 0)
-    //     );
-    //     setPlaceFilter([]);
-    //   });
-    // }
-  }, [type, bounds]);
+  // useEffect(() => {
+  //   if (bounds.sw && bounds.ne) {
+  //     fetchApi(type, bounds.sw, bounds.ne).then((data) => {
+  //       setPlaces(
+  //         data.data?.filter((place) => place.name && place.num_reviews > 0)
+  //       );
+  //       setPlaceFilter([]);
+  //     });
+  //   }
+  // }, [type, bounds]);
   // ======================================
   // weatherFetch(coordinates.lat, coordinates.lng).then((data) => {
   //   setWeather(data.coord);
