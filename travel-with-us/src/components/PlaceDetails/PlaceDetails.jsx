@@ -14,7 +14,7 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PhoneIcon from "@material-ui/icons/Phone";
 import Rating from "@material-ui/lab/Rating";
 import usestyles from "./styles";
-import styles from "./styles";
+
 import { addFavorite } from "../../slice/slice";
 const PlaceDetails = ({
   place,
@@ -31,13 +31,11 @@ const PlaceDetails = ({
   }, [selectedPlace]);
   const classes = usestyles();
   const dispatch = useDispatch();
-  const addPlace = () => {
-    dispatch(addFavorite(place));
-  };
+
   return (
     <Card
       elevation={6}
-      className={selectedPlace?.id === place.id ? "red" : styles}
+      className={selectedPlace?.id === place.id ? "red" : "white"}
       onClick={() => changePlace(place)}
       style={{ cursor: "pointer" }}
     >
@@ -125,7 +123,11 @@ const PlaceDetails = ({
           >
             website
           </Button>
-          <Button onClick={addPlace} size="small" color="primary">
+          <Button
+            onClick={() => dispatch(addFavorite(place))}
+            size="small"
+            color="primary"
+          >
             Favourite
           </Button>
         </CardActions>

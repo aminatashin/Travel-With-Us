@@ -31,7 +31,7 @@ const All = () => {
     setPlaceFilter(placesFilter);
   }, [rating, palces]);
   // ======================================
-  useEffect(() => {
+  // useEffect(() => {
   //   if (bounds.sw && bounds.ne) {
   //     fetchApi(type, bounds.sw, bounds.ne).then((data) => {
   //       setPlaces(
