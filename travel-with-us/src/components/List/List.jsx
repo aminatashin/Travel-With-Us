@@ -21,6 +21,8 @@ const List = ({
   setType,
   rating,
   setRating,
+  changePlace,
+  selectedPlace,
 }) => {
   const classes = useStyles();
 
@@ -69,6 +71,8 @@ const List = ({
                   selected={Number(childClick) === i}
                   refProp={elRefs[i]}
                   place={place}
+                  selectedPlace={selectedPlace}
+                  changePlace={changePlace}
                 />
               </Grid>
             ))}

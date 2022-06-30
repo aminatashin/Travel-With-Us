@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -9,17 +9,38 @@ import {
   CardActions,
   Chip,
 } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PhoneIcon from "@material-ui/icons/Phone";
 import Rating from "@material-ui/lab/Rating";
 import usestyles from "./styles";
-const PlaceDetails = ({ place, selected, refProp }) => {
+import styles from "./styles";
+import { addFavorite } from "../../slice/slice";
+const PlaceDetails = ({
+  place,
+  selected,
+  refProp,
+  changePlace,
+  selectedPlace,
+}) => {
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-
+  const [feavoritePlace, setFavoritePlace] = useState(null);
+  useEffect(() => {
+    setFavoritePlace(selectedPlace);
+  }, [selectedPlace]);
   const classes = usestyles();
+  const dispatch = useDispatch();
+  const addPlace = () => {
+    dispatch(addFavorite(place));
+  };
   return (
-    <Card elevation={6}>
+    <Card
+      elevation={6}
+      className={selectedPlace?.id === place.id ? "red" : styles}
+      onClick={() => changePlace(place)}
+      style={{ cursor: "pointer" }}
+    >
       <CardMedia
         style={{ height: 350 }}
         image={
@@ -103,6 +124,9 @@ const PlaceDetails = ({ place, selected, refProp }) => {
             onClick={() => window.open(place.website)}
           >
             website
+          </Button>
+          <Button onClick={addPlace} size="small" color="primary">
+            Favourite
           </Button>
         </CardActions>
       </CardContent>

@@ -1,31 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useStyles from "./styles";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { TextField, Button, Typography, Paper, Grid } from "@material-ui/core";
 // ====================================================
 const initSign = {
-  firstname: "",
-  username: "",
   email: "",
   password: "",
 };
 // ====================================================
-const SignUp = () => {
+const LogIn = () => {
   const [userData, setUser] = useState(initSign);
   const navigate = useNavigate();
   // ====================================================
   const classes = useStyles();
   // ====================================================
+  useEffect(() => {
+    if (localStorage.getItem("jwtToken")) {
+    }
+  }, []);
   // ====================================================
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchPost();
-    setUser("");
   };
   // ====================================================
   const fetchPost = async () => {
-    const res = await fetch("http://localhost:4000/user/signup", {
+    const res = await fetch("http://localhost:4000/user/login", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: {
@@ -33,16 +34,16 @@ const SignUp = () => {
       },
     });
     if (res.ok) {
-      alert("successfully signed in!");
-      navigate("/");
+      const data = await res.json();
+      localStorage.setItem("jwtToken", data.token);
+      alert("wellCome!");
+      navigate("/travel-with-us");
+    } else {
+      console.log("something went Wrong");
     }
   };
   // ====================================================
-  const canSubmit =
-    Boolean(userData.firstname) &&
-    Boolean(userData.username) &&
-    Boolean(userData.email) &&
-    Boolean(userData.password);
+  const canSubmit = Boolean(userData.email) && Boolean(userData.password);
 
   return (
     <Grid item xs={12} sm={4}>
@@ -54,18 +55,8 @@ const SignUp = () => {
           onSubmit={handleSubmit}
         >
           <Typography style={{ color: "green" }} variant="h6">
-            Sign Up
+            Log In
           </Typography>
-          <TextField
-            name="Firstname"
-            variant="outlined"
-            label="Firstname"
-            fullWidth
-            value={userData.firstname}
-            onChange={(e) =>
-              setUser({ ...userData, firstname: e.target.value })
-            }
-          />
           <TextField
             name="Username"
             variant="outlined"
@@ -74,6 +65,7 @@ const SignUp = () => {
             value={userData.username}
             onChange={(e) => setUser({ ...userData, username: e.target.value })}
           />
+
           <TextField
             name="Email"
             variant="outlined"
@@ -99,7 +91,21 @@ const SignUp = () => {
             fullWidth
             disabled={!canSubmit}
           >
-            Submit
+            Log In
+          </Button>
+
+          <Button
+            className={classes.buttonSubmit}
+            variant="contained"
+            color="primary"
+            size="large"
+            type="submit"
+            fullWidth
+          >
+            <Link to="/signup" style={{ color: "white" }}>
+              {" "}
+              Do not Have an account? Sign Up
+            </Link>
           </Button>
         </form>
       </Paper>
@@ -107,4 +113,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default LogIn;

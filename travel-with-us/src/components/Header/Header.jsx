@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import { Autocomplete } from "@react-google-maps/api";
-import { AppBar, Toolbar, Typography, InputBase, Box } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  InputBase,
+  Box,
+  Button,
+} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
 import useStyles from "./styles.js";
+import LogOut from "../LogOut/LogOut";
+import { Link } from "react-router-dom";
 
 const Header = ({ setCoordinates }) => {
   const [autocomplete, setAutocomplete] = useState(null);
@@ -22,6 +31,11 @@ const Header = ({ setCoordinates }) => {
         <Typography variant="h5" className={classes.title}>
           Travel With Us
         </Typography>
+        <Button style={{ color: "white" }}>
+          <Link to="/favourite" style={{ color: "white" }}>
+            Favourites
+          </Link>
+        </Button>
         <Box display="flex">
           <Typography variant="h6" className={classes.title}>
             Where You Wanna GO!
@@ -37,6 +51,7 @@ const Header = ({ setCoordinates }) => {
               />
             </div>
           </Autocomplete>
+          <LogOut />
         </Box>
       </Toolbar>
     </AppBar>

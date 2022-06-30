@@ -6,6 +6,7 @@ import Map from "./Map/Map";
 
 const All = () => {
   const [palces, setPlaces] = useState([]);
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
@@ -30,7 +31,7 @@ const All = () => {
     setPlaceFilter(placesFilter);
   }, [rating, palces]);
   // ======================================
-  // useEffect(() => {
+  useEffect(() => {
   //   if (bounds.sw && bounds.ne) {
   //     fetchApi(type, bounds.sw, bounds.ne).then((data) => {
   //       setPlaces(
@@ -72,6 +73,9 @@ const All = () => {
       console.log(error);
     }
   };
+  const changePlace = (place) => {
+    setSelectedPlace(place);
+  };
   // ============================================
   // const weatherFetch = async (lat, lng) => {
   //   const res = await fetch(
@@ -105,6 +109,8 @@ const All = () => {
             setType={setType}
             rating={rating}
             setRating={setRating}
+            slected={selectedPlace}
+            changePlace={changePlace}
           />
         </Grid>
 
