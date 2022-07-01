@@ -1,6 +1,16 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
+  Typography: {
+    fontSize: 50,
+    fontWeight: 700,
+    marginTop: 30,
+    color: "green",
+    marginLeft: 50,
+  },
+  body: {
+    background: "red",
+  },
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
@@ -8,6 +18,7 @@ export default makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
+    marginTop: 60,
   },
   form: {
     display: "flex",

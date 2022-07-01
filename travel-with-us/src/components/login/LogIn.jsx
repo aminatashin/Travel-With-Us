@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import useStyles from "./styles";
 import { Link, useNavigate } from "react-router-dom";
-
-import { TextField, Button, Typography, Paper, Grid } from "@material-ui/core";
+import SignUp from "../Signup/SignUp";
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Grid,
+  Container,
+  Grow,
+} from "@material-ui/core";
 // ====================================================
 const initSign = {
   email: "",
@@ -46,70 +54,94 @@ const LogIn = () => {
   const canSubmit = Boolean(userData.email) && Boolean(userData.password);
 
   return (
-    <Grid item xs={12} sm={4}>
-      <Paper className={classes.paper}>
-        <form
-          autoComplete="off"
-          noValidate
-          className={`${classes.root} ${classes.form}`}
-          onSubmit={handleSubmit}
-        >
-          <Typography style={{ color: "green" }} variant="h6">
-            Log In
-          </Typography>
-          <TextField
-            name="Username"
-            variant="outlined"
-            label="Username"
-            fullWidth
-            value={userData.username}
-            onChange={(e) => setUser({ ...userData, username: e.target.value })}
-          />
-
-          <TextField
-            name="Email"
-            variant="outlined"
-            label="Email"
-            fullWidth
-            value={userData.email}
-            onChange={(e) => setUser({ ...userData, email: e.target.value })}
-          />
-          <TextField
-            name="Password"
-            variant="outlined"
-            label="Password"
-            fullWidth
-            value={userData.password}
-            onChange={(e) => setUser({ ...userData, password: e.target.value })}
-          />
-          <Button
-            className={classes.buttonSubmit}
-            variant="contained"
-            color="primary"
-            size="large"
-            type="submit"
-            fullWidth
-            disabled={!canSubmit}
+    <Container maxWidth="lg">
+      <Typography className={classes.Typography} veriant="h1" size="large">
+        Wellcome, Please Sign/Log In to enjoy your Trip!
+      </Typography>
+      <Grow in>
+        <Container>
+          <Grid
+            container
+            justify="space-around"
+            alignItems="center"
+            spacing={1}
           >
-            Log In
-          </Button>
+            <Grid item xs={12} sm={5}>
+              <Paper className={classes.paper}>
+                <form
+                  autoComplete="off"
+                  noValidate
+                  className={`${classes.root} ${classes.form}`}
+                  onSubmit={handleSubmit}
+                >
+                  <Typography style={{ color: "green" }} variant="h6">
+                    Log In
+                  </Typography>
+                  <TextField
+                    name="Username"
+                    variant="outlined"
+                    label="Username"
+                    fullWidth
+                    value={userData.username}
+                    onChange={(e) =>
+                      setUser({ ...userData, username: e.target.value })
+                    }
+                  />
+                  <TextField
+                    name="Email"
+                    variant="outlined"
+                    label="Email"
+                    fullWidth
+                    value={userData.email}
+                    onChange={(e) =>
+                      setUser({ ...userData, email: e.target.value })
+                    }
+                  />
+                  <TextField
+                    name="Password"
+                    variant="outlined"
+                    label="Password"
+                    fullWidth
+                    value={userData.password}
+                    onChange={(e) =>
+                      setUser({ ...userData, password: e.target.value })
+                    }
+                  />
+                  <Button
+                    className={classes.buttonSubmit}
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    type="submit"
+                    fullWidth
+                    disabled={!canSubmit}
+                  >
+                    Log In
+                  </Button>
+                  {/* <Link to="/signup" style={{ color: "white" }}>
+                    <Button
+                      className={classes.buttonSubmit}
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      type="submit"
+                      fullWidth
+                    >
+                      Do not Have an account? Sign Up
+                    </Button>
+                  </Link> */}
+                  Already have an account?
+                </form>
+              </Paper>
+            </Grid>
 
-          <Button
-            className={classes.buttonSubmit}
-            variant="contained"
-            color="primary"
-            size="large"
-            type="submit"
-            fullWidth
-          >
-            <Link to="/signup" style={{ color: "white" }}>
-              {" "}
-              Do not Have an account? Sign Up
-            </Link>
-          </Button>
-        </form>
-      </Paper>
-    </Grid>
+            <Grid item xs={12} sm={5}>
+              <SignUp />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grow>
+    </Container>
   );
 };
 
