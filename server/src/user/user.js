@@ -27,6 +27,15 @@ userRouter.get("/signup", tokenAuth, async (req, res, next) => {
   const getUser = await userModel();
   res.send(getUser);
 });
+// userRouter.post("/:userId/favorite", async (req, res, next) => {
+//   try {
+//     const favorite = new userModel(req.body);
+//     const { _id } = await user.save();
+//     res.send({ _id });
+//   } catch (error) {
+//     console.log(error);
+//     next(error);
+//   }
 // ========================================
 userRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;

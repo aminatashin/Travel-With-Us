@@ -9,7 +9,7 @@ import {
   CardActions,
   Chip,
 } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PhoneIcon from "@material-ui/icons/Phone";
 import Rating from "@material-ui/lab/Rating";
@@ -25,12 +25,27 @@ const PlaceDetails = ({
 }) => {
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  const [feavoritePlace, setFavoritePlace] = useState(null);
-  useEffect(() => {
-    setFavoritePlace(selectedPlace);
-  }, [selectedPlace]);
+  const [fevorite, setFavorite] = useState({
+    location: "",
+  });
+
   const classes = usestyles();
-  const dispatch = useDispatch();
+  const favoriteHandle = async () => {
+    fetchPost();
+  };
+  // =========FetchPost=============================
+  const fetchPost = async () => {
+    const res = await fetch("/:userId/favorite", {
+      method: "POST",
+      body: JSON.stringify(addFavorite),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      alert("successfully added the Place!");
+    }
+  };
 
   return (
     <Card
@@ -123,11 +138,7 @@ const PlaceDetails = ({
           >
             website
           </Button>
-          <Button
-            onClick={() => dispatch(addFavorite(place))}
-            size="small"
-            color="primary"
-          >
+          <Button onClick={favoriteHandle} size="small" color="primary">
             Favourite
           </Button>
         </CardActions>
