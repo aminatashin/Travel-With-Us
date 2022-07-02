@@ -15,7 +15,6 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import Rating from "@material-ui/lab/Rating";
 import usestyles from "./styles";
 
-import { addFavorite } from "../../slice/slice";
 const PlaceDetails = ({
   place,
   selected,
@@ -25,19 +24,16 @@ const PlaceDetails = ({
 }) => {
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  const [fevorite, setFavorite] = useState({
-    location: "",
-  });
 
   const classes = usestyles();
-  const favoriteHandle = async () => {
+  const handleFetch = async () => {
     fetchPost();
   };
   // =========FetchPost=============================
   const fetchPost = async () => {
-    const res = await fetch("/:userId/favorite", {
-      method: "POST",
-      body: JSON.stringify(addFavorite),
+    const res = await fetch("http://localhost:4000/user", {
+      method: "post",
+      body: JSON.stringify(place.location_id),
       headers: {
         "Content-Type": "application/json",
       },
@@ -138,7 +134,7 @@ const PlaceDetails = ({
           >
             website
           </Button>
-          <Button onClick={favoriteHandle} size="small" color="primary">
+          <Button onClick={handleFetch} size="small" color="primary">
             Favourite
           </Button>
         </CardActions>
@@ -148,3 +144,4 @@ const PlaceDetails = ({
 };
 
 export default PlaceDetails;
+//

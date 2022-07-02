@@ -5,6 +5,17 @@ import { tokenAuth } from "../tools/token.js";
 // ========================================
 const userRouter = express.Router();
 // ========================================
+userRouter.post("/", async (req, res, next) => {
+  try {
+    const user = await userModel.findByIdAndUpdate(req.user._id, {
+      $push: {
+        favorite: location_id,
+      },
+    });
+  } catch (error) {
+    console.log(`BE problem${error}`);
+  }
+});
 userRouter.post("/signup", async (req, res, next) => {
   try {
     const user = new userModel(req.body);
@@ -27,15 +38,7 @@ userRouter.get("/signup", tokenAuth, async (req, res, next) => {
   const getUser = await userModel();
   res.send(getUser);
 });
-// userRouter.post("/:userId/favorite", async (req, res, next) => {
-//   try {
-//     const favorite = new userModel(req.body);
-//     const { _id } = await user.save();
-//     res.send({ _id });
-//   } catch (error) {
-//     console.log(error);
-//     next(error);
-//   }
+
 // ========================================
 userRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;

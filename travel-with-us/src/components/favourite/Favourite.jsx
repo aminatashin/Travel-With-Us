@@ -9,13 +9,12 @@ import {
   CardActions,
   Chip,
 } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PhoneIcon from "@material-ui/icons/Phone";
 import Rating from "@material-ui/lab/Rating";
 import usestyles from "./styles";
 
-import { removeFavorite } from "../../slice/slice";
 import { useSelector } from "react-redux";
 const Favourite = () => {
   const placeFavorite = useSelector((state) => state.place.favorite);

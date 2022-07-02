@@ -2,8 +2,12 @@ import express from "express";
 import favoriteModel from "../model/favoriteModel.js";
 // ====================================================
 const favoriteRouter = express.Router();
-favoriteRouter.post("/", async (req, res, next) => {
-  const favorite = new favoriteModel(req.body);
+favoriteRouter.put("/", async (req, res, next) => {
+  const favorite = await favoriteModel.findByIdAndUpdate(req.user._id, {
+    $push: {
+      location: location._id,
+    },
+  });
   const { _id } = await favorite.save();
   res.send({ _id });
 });
