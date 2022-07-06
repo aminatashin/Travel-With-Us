@@ -66,7 +66,7 @@ const All = () => {
       );
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        console.log(data.data);
         setPlaces(data.data);
       }
     } catch (error) {

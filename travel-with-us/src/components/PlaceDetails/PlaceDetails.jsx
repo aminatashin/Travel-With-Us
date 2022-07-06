@@ -24,14 +24,17 @@ const PlaceDetails = ({
 }) => {
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-
+  const [fav, setFav] = useState({
+    location: "",
+  });
   const classes = usestyles();
+
   const handleFetch = async () => {
     fetchPost();
   };
   // =========FetchPost=============================
   const fetchPost = async () => {
-    const res = await fetch("http://localhost:4000/user", {
+    const res = await fetch("http://localhost:4000/user/place", {
       method: "post",
       body: JSON.stringify(place.location_id),
       headers: {
