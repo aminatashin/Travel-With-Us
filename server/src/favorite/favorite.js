@@ -3,7 +3,7 @@ import favoriteModel from "../model/favoriteModel.js";
 // ====================================================
 const favoriteRouter = express.Router();
 favoriteRouter.post("/", async (req, res, next) => {
-  const fav = new favoriteModel(req.body.location_id);
+  const fav = new favoriteModel(req.body);
   const { _id } = await fav.save();
   res.send({ _id });
 });

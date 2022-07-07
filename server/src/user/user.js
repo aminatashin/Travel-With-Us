@@ -43,8 +43,13 @@ userRouter.post("/signup", async (req, res, next) => {
 // });
 userRouter.get("/signup", tokenAuth, async (req, res, next) => {
   try {
-    const getUser = await userModel.find();
-    res.send(getUser);
+    const user2 = await userModel.findOne(req.body.email);
+    if (user2) {
+      return res.status(400).send({ msg: "this email already exists" });
+    } else {
+      const getUser = await userModel.find();
+      res.send(getUser);
+    }
   } catch (error) {
     console.log(error);
     next(error);
