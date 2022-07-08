@@ -6,26 +6,27 @@ import { tokenAuth } from "../tools/token.js";
 // ========================================
 const userRouter = express.Router();
 // ========================================
-userRouter.post("/place", async (req, res, next) => {
-  console.log(req.body.fav.location.location_id);
-  const { id: _id } = req.params;
-  console.log(req.params);
-  const getUser = await userModel.find();
+userRouter.post("/:id/place", async (req, res, next) => {
+  console.log(req.body.fav);
+  // const { id } = req.params;
+  // const getUser = await userModel.findById(id);
+  // console.log(getUser);
+  const getUser = await userModel.findById(req.params.id);
   console.log(getUser);
-
-  const modifiePlace = await userModel(
-    req.body.getUser,
-    {
-      $push: { place: req.body.fav.location.location_id },
-    },
-    { new: true, runValidation: true }
-  );
-  res.send(modifiePlace);
+  // const insert = { ...place.toObject(), insertDate: new Date() };
+  // const modifiePlace = await userModel(
+  //   req.params.id,
+  //   {
+  //     $push: { place: "" },
+  //   },
+  //   { new: true, runValidation: true }
+  // );
+  res.send("gayidi!");
 });
 // ========================================
-userRouter.get("/place", async (req, res, next) => {
+userRouter.get("/:id", async (req, res, next) => {
   try {
-    const getUser = await userModel.find();
+    const getUser = await userModel.findById(req.params.id);
     res.send(getUser);
   } catch (error) {
     console.log(error);
