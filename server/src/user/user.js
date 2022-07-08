@@ -21,7 +21,7 @@ userRouter.post("/:id/place", async (req, res, next) => {
   //   },
   //   { new: true, runValidation: true }
   // );
-  res.send("gayidi!");
+  res.send("anything");
 });
 // ========================================
 userRouter.get("/:id", async (req, res, next) => {
