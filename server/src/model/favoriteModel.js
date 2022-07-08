@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 const favoriteSchema = new Schema(
   {
-    location: [{ location: String }],
+    location: { type: String },
   },
   { timestamps: true }
 );

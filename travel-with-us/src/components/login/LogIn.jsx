@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 // ====================================================
 const initSign = {
+  username: "",
   email: "",
   password: "",
 };
@@ -31,6 +32,7 @@ const LogIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchPost();
+    setUser({ username: "", email: "", password: "" });
   };
   // ====================================================
   const fetchPost = async () => {

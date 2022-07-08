@@ -2,23 +2,36 @@ import express from "express";
 import userModel from "../model/model.js";
 import { generateToken } from "../tools/tools.js";
 import { tokenAuth } from "../tools/token.js";
-import favoriteModel from "../model/favoriteModel.js";
+
 // ========================================
 const userRouter = express.Router();
 // ========================================
-userRouter.post("/place", tokenAuth, async (req, res, next) => {
-  const places = await favoriteModel.findById(req.body.location_id, { _id: 0 });
-  const placeInsert = { ...places.toObject(), purchaseDate: new Date() };
+userRouter.post("/place", async (req, res, next) => {
+  console.log(req.body.fav.location.location_id);
+  const { id: _id } = req.params;
+  console.log(req.params);
+  const getUser = await userModel.find();
+  console.log(getUser);
+
   const modifiePlace = await userModel(
-    req.user._id,
+    req.body.getUser,
     {
-      $push: { place: placeInsert },
+      $push: { place: req.body.fav.location.location_id },
     },
     { new: true, runValidation: true }
   );
   res.send(modifiePlace);
 });
 // ========================================
+userRouter.get("/place", async (req, res, next) => {
+  try {
+    const getUser = await userModel.find();
+    res.send(getUser);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 userRouter.post("/signup", async (req, res, next) => {
   try {
     const user = new userModel(req.body);
@@ -43,18 +56,19 @@ userRouter.post("/signup", async (req, res, next) => {
 // });
 userRouter.get("/signup", tokenAuth, async (req, res, next) => {
   try {
-    const user2 = await userModel.findOne(req.body.email);
-    if (user2) {
-      return res.status(400).send({ msg: "this email already exists" });
-    } else {
-      const getUser = await userModel.find();
-      res.send(getUser);
-    }
+    // const user2 = await userModel.findOne(req.body.email);
+    // if (user2) {
+    //   return res.status(400).send({ msg: "this email already exists" });
+    // } else {
+    const getUser = await userModel.find();
+    res.send(getUser);
   } catch (error) {
     console.log(error);
     next(error);
   }
 });
+
+// ========================================
 
 // ========================================
 userRouter.post("/login", async (req, res, next) => {

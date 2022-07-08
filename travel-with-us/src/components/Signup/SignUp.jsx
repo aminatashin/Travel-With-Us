@@ -20,6 +20,7 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchPost();
+    setUser({ firstname: "", username: "", email: "", password: "" });
   };
   // ====================================================
   const fetchPost = async () => {
@@ -31,7 +32,6 @@ const SignUp = () => {
       },
     });
     if (res.ok) {
-      setUser("");
       alert("successfully signed in!");
     }
   };
