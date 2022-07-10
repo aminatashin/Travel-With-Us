@@ -27,6 +27,7 @@ userRouter.post("/:id/place", async (req, res, next) => {
 userRouter.get("/:id", async (req, res, next) => {
   try {
     const getUser = await userModel.findById(req.params.id);
+    console.log
     res.send(getUser);
   } catch (error) {
     console.log(error);
