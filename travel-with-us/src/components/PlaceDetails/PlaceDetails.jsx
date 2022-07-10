@@ -25,7 +25,7 @@ const PlaceDetails = ({
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   const [fav, setFav] = useState({
-    location: place.location_id,
+    location: place,
   });
   const classes = usestyles();
 
@@ -34,13 +34,16 @@ const PlaceDetails = ({
   };
   // =========FetchPost=============================
   const fetchPost = async (id) => {
-    const res = await fetch(`http://localhost:4000/user/${id}/place`, {
-      method: "post",
-      body: JSON.stringify({ fav }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `http://localhost:4000/user/place/62c70bfef3e51889420ffdb8`,
+      {
+        method: "post",
+        body: JSON.stringify({ fav }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (res.ok) {
       alert("successfully added the Place!");
     }

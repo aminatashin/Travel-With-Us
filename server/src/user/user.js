@@ -6,29 +6,24 @@ import { tokenAuth } from "../tools/token.js";
 // ========================================
 const userRouter = express.Router();
 // ========================================
-userRouter.post("/:id/place", async (req, res, next) => {
-  console.log(req.body.fav);
-  // const { id } = req.params;
-  // const getUser = await userModel.findById(id);
-  // console.log(getUser);
-  const getUser = await userModel.findById(req.params.id);
-  console.log(getUser);
-  // const insert = { ...place.toObject(), insertDate: new Date() };
-  // const modifiePlace = await userModel(
-  //   req.params.id,
-  //   {
-  //     $push: { place: "" },
-  //   },
-  //   { new: true, runValidation: true }
-  // );
-  res.send("anything");
+userRouter.post("/place/:id", async (req, res, next) => {
+  const { id: _id } = req.params;
+  const data = req.body;
+  const modifiePlace = await userModel.findByIdAndUpdate(
+    _id,
+    {
+      $push: { place: data.fav },
+    },
+    { new: true, runValidation: true }
+  );
+  res.json(modifiePlace);
 });
 // ========================================
-userRouter.get("/:id", async (req, res, next) => {
+userRouter.get("/place/:id", async (req, res, next) => {
   try {
     const getUser = await userModel.findById(req.params.id);
-    console.log
-    res.send(getUser);
+    console.log;
+    res.send(getUser.place);
   } catch (error) {
     console.log(error);
     next(error);
@@ -56,12 +51,8 @@ userRouter.post("/signup", async (req, res, next) => {
 //   const getUser = await userModel();
 //   res.send(getUser);
 // });
-userRouter.get("/signup", tokenAuth, async (req, res, next) => {
+userRouter.get("/signup", async (req, res, next) => {
   try {
-    // const user2 = await userModel.findOne(req.body.email);
-    // if (user2) {
-    //   return res.status(400).send({ msg: "this email already exists" });
-    // } else {
     const getUser = await userModel.find();
     res.send(getUser);
   } catch (error) {

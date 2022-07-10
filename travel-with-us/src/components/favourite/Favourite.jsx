@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Typography,
@@ -9,16 +9,21 @@ import {
   CardActions,
   Chip,
 } from "@material-ui/core";
-
+import { fPlace } from "../../slice/slice";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PhoneIcon from "@material-ui/icons/Phone";
 import Rating from "@material-ui/lab/Rating";
 import usestyles from "./styles";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 const Favourite = () => {
   const placeFavorite = useSelector((state) => state.place.favorite);
   const classes = usestyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fPlace());
+  }, [dispatch]);
+  console.log(placeFavorite);
   return (
     <Card elevation={6} style={{ cursor: "pointer" }}>
       <CardMedia
